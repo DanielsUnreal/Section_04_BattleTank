@@ -35,6 +35,22 @@ ATank* ATankPlayerController::GetControlledTank() const
 void ATankPlayerController::AimTowardsCrosshair()
 {
 	if (!GetControlledTank()) { return; }
-	//TODO linetrace and aiming
+	
+	FVector HitLocation;//out parameter
+	if (GetSightRayHitLocation(HitLocation))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Aiming towards: %s"), *HitLocation.ToString())
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Cannot aim there"))
+	}
+
+}
+
+bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
+{
+	HitLocation =  FVector(1.0);
+	return true;
 }
 
