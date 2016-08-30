@@ -39,7 +39,7 @@ void ATankPlayerController::AimTowardsCrosshair()
 	FVector HitLocation;//out parameter
 	if (GetSightRayHitLocation(HitLocation))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Aiming towards: %s"), *HitLocation.ToString())
+		//UE_LOG(LogTemp, Warning, TEXT("Aiming towards: %s"), *HitLocation.ToString())
 	}
 	else
 	{
@@ -50,7 +50,29 @@ void ATankPlayerController::AimTowardsCrosshair()
 
 bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 {
-	HitLocation =  FVector(1.0);
+	//Find crosshair position in pixel coordinates
+	int32 ViewportSizeX, ViewportSizeY;
+	GetViewportSize(ViewportSizeX, ViewportSizeY);
+	auto CrosshairScreenLocation = FVector2D(CrossHairXLocation * ViewportSizeX, CrossHairYLocation * ViewportSizeY);
+	
+
+	FVector CameraToCrosshairWorldDirection;
+	if (GetLookDirection(CrosshairScreenLocation, CameraToCrosshairWorldDirection))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Aiming towards: %s"), *CameraToCrosshairWorldDirection.ToString())
+	}
+	
+
+	//Line-trace along that look direction, and see what we hit (up to max range)
+
+
 	return true;
+}
+
+//"De-project" the screen position of the cross-hair to a world direction
+bool ATankPlayerController::GetLookDirection(FVector2D CrosshairScreenLocation, FVector & LookDirection) const
+{
+	FVector CameraWorldLocation;
+	return DeprojectScreenPositionToWorld(CrosshairScreenLocation.X, CrosshairScreenLocation.Y, CameraWorldLocation, LookDirection);
 }
 
