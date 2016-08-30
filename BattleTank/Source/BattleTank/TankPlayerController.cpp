@@ -39,40 +39,56 @@ void ATankPlayerController::AimTowardsCrosshair()
 	FVector HitLocation;//out parameter
 	if (GetSightRayHitLocation(HitLocation))
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("Aiming towards: %s"), *HitLocation.ToString())
+		//Rotate and elevate towards that position
+		UE_LOG(LogTemp, Warning, TEXT("Hitting on: %s"), *HitLocation.ToString())
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Cannot aim there"))
+		UE_LOG(LogTemp, Warning, TEXT("Out of range"))//Maybe change color of crosshair to red
 	}
 
 }
 
 bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 {
-	//Find crosshair position in pixel coordinates
 	int32 ViewportSizeX, ViewportSizeY;
 	GetViewportSize(ViewportSizeX, ViewportSizeY);
 	auto CrosshairScreenLocation = FVector2D(CrossHairXLocation * ViewportSizeX, CrossHairYLocation * ViewportSizeY);
 	
 
 	FVector CameraToCrosshairWorldDirection;
-	if (GetLookDirection(CrosshairScreenLocation, CameraToCrosshairWorldDirection))
+	FVector CameraWorldLocation;
+	if (GetLookDirection(CrosshairScreenLocation, CameraToCrosshairWorldDirection, CameraWorldLocation))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Aiming towards: %s"), *CameraToCrosshairWorldDirection.ToString())
+		if (GetLookVectorHitLocation(HitLocation, CameraWorldLocation, CameraToCrosshairWorldDirection))
+		{
+			return true;
+		}	
 	}
 	
-
-	//Line-trace along that look direction, and see what we hit (up to max range)
-
-
-	return true;
+	return false;
 }
 
+
 //"De-project" the screen position of the cross-hair to a world direction
-bool ATankPlayerController::GetLookDirection(FVector2D CrosshairScreenLocation, FVector & LookDirection) const
+bool ATankPlayerController::GetLookDirection(FVector2D CrosshairScreenLocation, FVector & LookDirection, FVector & CameraWorldLocation) const
 {
-	FVector CameraWorldLocation;
 	return DeprojectScreenPositionToWorld(CrosshairScreenLocation.X, CrosshairScreenLocation.Y, CameraWorldLocation, LookDirection);
+}
+
+
+//Line-trace along the look direction, and see what we hit (up to max range)
+bool ATankPlayerController::GetLookVectorHitLocation(FVector & HitLocation, FVector CameraWorldLocation, FVector LookDirection) const
+{
+	FHitResult Hit;
+	FVector LineTraceEnd = CameraWorldLocation + LookDirection*LineTraceRange;
+	bool bLineTraceSucceeded = GetWorld()->LineTraceSingleByChannel(
+		Hit,
+		CameraWorldLocation,
+		LineTraceEnd,
+		ECC_Visibility
+	);
+	HitLocation = Hit.ImpactPoint;
+	return bLineTraceSucceeded;
 }
 

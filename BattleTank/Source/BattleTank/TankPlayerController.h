@@ -25,11 +25,18 @@ private:
 
 	bool GetSightRayHitLocation(FVector & HitLocation) const;
 
+	bool GetLookDirection(FVector2D CrosshairScreenLocation, FVector& LookDirection, FVector & CameraWorldLocation) const;
+
+	bool GetLookVectorHitLocation(FVector& HitLocation, FVector CameraWorldLocation, FVector LookDirection) const;
+
+
+
 	UPROPERTY(EditAnywhere)
 	float CrossHairXLocation = 0.5;
 
 	UPROPERTY(EditAnywhere)
 	float CrossHairYLocation = 0.33333;
 
-	bool GetLookDirection(FVector2D CrosshairScreenLocation, FVector& LookDirection) const;
+	UPROPERTY(EditAnywhere)
+	float LineTraceRange = 20000;//in cm
 };
