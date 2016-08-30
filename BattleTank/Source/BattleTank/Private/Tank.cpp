@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BattleTank.h"
-#include "Tank.h"
+#include "../Public/Tank.h"
 
 
 // Sets default values
@@ -31,5 +31,11 @@ void ATank::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 {
 	Super::SetupPlayerInputComponent(InputComponent);
 
+}
+
+void ATank::AimAt(FVector HitLocation)
+{
+	auto MyName = GetName();
+	UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s"), *MyName, *HitLocation.ToString())
 }
 

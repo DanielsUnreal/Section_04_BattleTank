@@ -9,7 +9,7 @@ void ATankAIController::BeginPlay()
 	Super::BeginPlay();
 	UE_LOG(LogTemp, Warning, TEXT("BeginPlay in TankAIController"))
 
-	ATank* PlayerTank = GetPlayerTank();
+	ATank* PlayerTank = GetPlayerTank();//Not global because player tank may be destroyed and respawned
 	if (PlayerTank != nullptr)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Player tank found: %s"), *PlayerTank->GetName())
@@ -17,6 +17,16 @@ void ATankAIController::BeginPlay()
 	else
 	{
 		UE_LOG(LogTemp, Warning, TEXT("No player tank found"))
+	}
+}
+
+void ATankAIController::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+	ATank* PlayerTank = GetPlayerTank();
+	if (PlayerTank)
+	{
+		GetControlledTank()->AimAt(PlayerTank->GetActorLocation());
 	}
 }
 

@@ -39,8 +39,7 @@ void ATankPlayerController::AimTowardsCrosshair()
 	FVector HitLocation;//out parameter
 	if (GetSightRayHitLocation(HitLocation))
 	{
-		//Rotate and elevate towards that position
-		UE_LOG(LogTemp, Warning, TEXT("Hitting on: %s"), *HitLocation.ToString())
+		GetControlledTank()->AimAt(HitLocation);
 	}
 	else
 	{
