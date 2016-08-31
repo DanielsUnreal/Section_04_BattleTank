@@ -1,10 +1,2 @@
 # BattleTank
-Me following the Unreal Engine Developer Course.
-
-## Lecture List
-* Lecture 94: Intro & Section Notes
-* Lecture 95: Game Design Document (GDD)
-* Lecture 96: Setting Up a GitHub "Repo"
-* Lecture 97: Creating & Deleting Landscapes
-* Lecture 98: Landscape Setup & Scaling
-* Lecture 99: A Landscaping Process
+Me following "The Unreal Engine Developer Course - Learn C++ & Make Games", from Ben Tristem, in Udemy.
