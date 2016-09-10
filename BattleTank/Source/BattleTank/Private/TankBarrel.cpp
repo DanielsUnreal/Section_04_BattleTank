@@ -4,12 +4,12 @@
 #include "TankBarrel.h"
 
 
-void UTankBarrel::Elevate(float RelativeSpeed)
+void UTankBarrel::Elevate(float DeltaAngle)
 {
-	RelativeSpeed = FMath::Clamp<float>(RelativeSpeed,-1,1);
+	float RelativeSpeed = FMath::Clamp<float>(DeltaAngle,-1,1);//if the target aim is one or more degrees off, move at full speed
 
-	auto ElevationChange = RelativeSpeed * MaxDegreesPerSecond * GetWorld()->DeltaTimeSeconds;
-	auto RawNewElevation = ElevationChange + RelativeRotation.Pitch;//Rotates Y axis, which goes from side to side of the tank
+	auto ElevationInCurrentFrame = RelativeSpeed * MaxDegreesPerSecond * GetWorld()->DeltaTimeSeconds;
+	auto RawNewElevation = ElevationInCurrentFrame + RelativeRotation.Pitch;//Rotates Y axis, which goes from side to side of the tank
 	auto NewElevation = FMath::Clamp<float>(RawNewElevation,MinElevation,MaxElevation);
 
 	SetRelativeRotation(FRotator(NewElevation,0,0));
