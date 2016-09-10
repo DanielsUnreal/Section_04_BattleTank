@@ -29,7 +29,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	if (!Barrel) { return; }
 	FVector OutLaunchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
-
+	
 	bool bDidSucceed = UGameplayStatics::SuggestProjectileVelocity(
 		this,
 		OutLaunchVelocity,
@@ -41,7 +41,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		0,
 		ESuggestProjVelocityTraceOption::DoNotTrace
 	);
-
+	
 	if (!bDidSucceed) { UE_LOG(LogTemp, Warning, TEXT("Failed suggesting projectile velocity")); return; }
 
 	auto AimDirection = OutLaunchVelocity.GetSafeNormal();
@@ -52,10 +52,10 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
-	//Rotate towards AimDirection at certain speed
+	//Tells the barrel and the turret to move
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAtRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAtRotator - BarrelRotator;
 
-	Barrel->Elevate(5);//TODO Replace magic number
+	Barrel->Elevate(DeltaRotator.Pitch);
 }

@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BattleTank.h"
+#include "Public/Tank.h"
 #include "TankPlayerController.h"
 
 
@@ -35,7 +36,7 @@ ATank* ATankPlayerController::GetControlledTank() const
 void ATankPlayerController::AimTowardsCrosshair()
 {
 	if (!GetControlledTank()) { return; }
-	
+
 	FVector HitLocation;//out parameter
 	if (GetSightRayHitLocation(HitLocation))
 	{
@@ -43,7 +44,7 @@ void ATankPlayerController::AimTowardsCrosshair()
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Out of range"))//Maybe change color of crosshair to red
+		UE_LOG(LogTemp, Warning, TEXT("Target out of range"))//Maybe change color of crosshair to red
 	}
 
 }
