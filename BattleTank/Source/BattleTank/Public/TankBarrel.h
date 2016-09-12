@@ -6,7 +6,7 @@
 #include "TankBarrel.generated.h"
 
 //Has barrel parameters and elevates it
-UCLASS(meta = (BlueprintSpawnableComponent), hidecategories = "Collision")
+UCLASS(meta = (BlueprintSpawnableComponent))//, hidecategories = "Collision")
 class BATTLETANK_API UTankBarrel : public UStaticMeshComponent
 {
 	GENERATED_BODY()
