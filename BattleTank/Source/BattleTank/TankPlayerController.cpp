@@ -40,11 +40,12 @@ void ATankPlayerController::AimTowardsCrosshair()
 	FVector HitLocation;//out parameter
 	if (GetSightRayHitLocation(HitLocation))
 	{
+		this->SetCrosshairColor(FLinearColor::White);
 		GetControlledTank()->AimAt(HitLocation);
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Target out of range"))//Maybe change color of crosshair to red
+		this->SetCrosshairColor(FLinearColor::Red);
 	}
 
 }
@@ -91,4 +92,5 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector & HitLocation, FVec
 	HitLocation = Hit.ImpactPoint;
 	return bLineTraceSucceeded;
 }
+
 

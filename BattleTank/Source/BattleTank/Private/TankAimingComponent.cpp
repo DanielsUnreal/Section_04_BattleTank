@@ -49,7 +49,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		ESuggestProjVelocityTraceOption::DoNotTrace
 	);
 	
-	if (!bDidSucceed) { UE_LOG(LogTemp, Warning, TEXT("Failed suggesting projectile velocity")); return; }
+	if (!bDidSucceed) { return; }//UE_LOG(LogTemp, Warning, TEXT("Failed suggesting projectile velocity"));
 
 	auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 	

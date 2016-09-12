@@ -13,6 +13,10 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 
+public:
+	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "Set Crosshair Color Event"))
+	void SetCrosshairColor(FLinearColor Color);
+
 private:
 	
 	virtual void BeginPlay() override;
@@ -27,7 +31,6 @@ private:
 	bool GetLookDirection(FVector2D CrosshairScreenLocation, FVector& LookDirection, FVector & CameraWorldLocation) const;
 
 	bool GetLookVectorHitLocation(FVector& HitLocation, FVector CameraWorldLocation, FVector LookDirection) const;
-
 
 
 	UPROPERTY(EditAnywhere)
