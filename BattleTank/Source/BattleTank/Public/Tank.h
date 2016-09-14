@@ -43,7 +43,7 @@ private:
 
 
 	UPROPERTY(EditAnywhere, Category = Firing)
-	float LaunchSpeed = 100000;//TODO Find sensible value
+	float LaunchSpeed = 4000;//TODO Find sensible value
 
 	UPROPERTY(EditAnywhere, Category = Setup)
 	TSubclassOf<AProjectile> ProjectileBlueprint;
