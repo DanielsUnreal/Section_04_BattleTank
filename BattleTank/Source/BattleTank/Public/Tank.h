@@ -41,16 +41,16 @@ private:
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 
 
-
-	UPROPERTY(EditAnywhere, Category = Firing)
-	float LaunchSpeed = 4000;//TODO Find sensible value
-
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditAnywhere, Category = Setup)//I may want enemy tanks to shoot a different projectile
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
-	UTankBarrel* Barrel;
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float LaunchSpeed = 4000;
 
+	UPROPERTY(EditDefaultsOnly, Category = Firing)//Editable only on the blueprint, not in particular instances
 	float ReloadTimeInSeconds = 3;
+
+	UTankBarrel* Barrel;
 
 	double LastFireTime = 0;
 	

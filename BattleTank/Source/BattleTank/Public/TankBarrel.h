@@ -15,13 +15,13 @@ public:
 	void Elevate(float DeltaAngle);
 	
 private:
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	float MaxDegreesPerSecond = 5;//just a default sensible value, can be changed in inspector
 
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	float MaxElevation = 30;//just a default sensible value, can be changed in inspector
 
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	float MinElevation = 0;//just a default sensible value, can be changed in inspector
 	
 };
